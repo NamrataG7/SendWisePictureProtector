@@ -39,11 +39,18 @@ The image-classification path ships with a **real, bundled** `.tflite` model (`S
 
 | Component | Status |
 |---|---|
-| Parental dashboard (Next.js/TypeScript) | ✅ `npx tsc --noEmit` passes locally, no type errors |
-| Android app (Kotlin/Gradle) | ⏳ No Android SDK available in the dev environment that wrote this code — not yet compiled locally. CI (`.github/workflows/build-apk.yml`) builds it on every push to `main`/PR via GitHub Actions (JDK 21 + Android SDK on `ubuntu-latest`) — check the Actions tab for the latest run status before relying on a release build. |
+| Parental dashboard (Next.js/TypeScript) | ✅ `npx tsc --noEmit` passes clean — verified both locally and in CI |
+| Android app (Kotlin/Gradle) | ✅ **Builds successfully in CI** — [Build APK workflow](https://github.com/NamrataG7/SendWisePictureProtector/actions/workflows/build-apk.yml) compiles the full app (IME, new image-blur feature, NSFW classifier, FileProvider) via real JDK 21 + Android SDK + Gradle on every push to `main`. Latest debug APK: Actions tab → latest successful run → Artifacts → `SendWise-debug-apk`. Not yet installed/run on a physical device or emulator — compiling cleanly is necessary but not sufficient; see "Not yet verified" below. |
 | NSFW image classifier | ✅ Real MIT-licensed TFLite model bundled and verified (input/output tensor shapes inspected directly against the shipped binary) |
 | Text toxicity model | Inherited from SendWise, unmodified |
 | Legal/compliance review | ❌ Not done. Before any public distribution (Play Store, public release), have this reviewed against local parental-monitoring-app regulations, disclosure/consent requirements for the monitored device, and app store policy for safety/monitoring apps. |
+
+### Not yet verified (compiles ≠ correct at runtime)
+
+- **On-device behavior**: no emulator/physical device run has happened. Install the debug APK from the CI artifact and manually test: enable the keyboard, open a messaging app, tap the attach-image button, pick an explicit vs. a normal image, confirm blur + overlay + commitContent/clipboard insertion all work as designed.
+- **`commitContent` host-app support**: only a subset of apps (Gboard-compatible messaging apps) support `InputConnection.commitContent()`; verify the clipboard fallback path actually works in your target apps (WhatsApp, Instagram, SMS).
+- **NSFW classifier accuracy on real images**: the bundled model reports ~92% validation accuracy on its own (upstream) test set — not independently re-validated against this app's actual use cases/image distribution.
+- **Parental dashboard deployment**: Vercel/Supabase/Redis env vars are not configured in this environment; the dashboard type-checks but has not been deployed or connected to a live device.
 
 ---
 
