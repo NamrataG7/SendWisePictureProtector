@@ -31,7 +31,19 @@ It is a three-tier system:
 | **Image attach button + picker + blur pipeline + 3-way decision overlay** | **New in this fork** |
 | Text-model training dataset (`model_training/data/SendWise_Dataset.csv`) | Reused as-is from SendWise. Per the upstream LICENSE's dataset notice, this dataset was scraped from public YouTube/X content in 2025 — it is **not** independently re-licensed by this fork; review platform ToS before any commercial redistribution of the dataset itself (the code that consumes it is MIT). |
 
-The image-classification path requires a real `.tflite` NSFW model binary that is **not bundled** in this repo (binary model weights aren't something that can be hand-authored) — see `SafePictureKeyboardApp/app/src/main/assets/models/MODEL_CARD_NSFW.md` for exactly which open-source model to convert and where to place it. Until that file is added, the classifier **fails open** (treats all images as non-sensitive) and the attach/insert flow still works normally — it just won't block anything yet.
+The image-classification path ships with a **real, bundled** `.tflite` model (`SafePictureKeyboardApp/app/src/main/assets/models/nsfw_classifier.tflite`, 17 MB, MIT-licensed, sourced from [GantMan/nsfw_model](https://github.com/GantMan/nsfw_model) release `1.2.0`) — see `MODEL_CARD_NSFW.md` for verified tensor shapes/class order and `THIRD_PARTY_LICENSES/nsfw_model-LICENSE.md` for the upstream license text. If this asset is ever missing/corrupted, the classifier fails open (treats all images as non-sensitive) rather than crashing.
+
+---
+
+## Current build/verification status
+
+| Component | Status |
+|---|---|
+| Parental dashboard (Next.js/TypeScript) | ✅ `npx tsc --noEmit` passes locally, no type errors |
+| Android app (Kotlin/Gradle) | ⏳ No Android SDK available in the dev environment that wrote this code — not yet compiled locally. CI (`.github/workflows/build-apk.yml`) builds it on every push to `main`/PR via GitHub Actions (JDK 21 + Android SDK on `ubuntu-latest`) — check the Actions tab for the latest run status before relying on a release build. |
+| NSFW image classifier | ✅ Real MIT-licensed TFLite model bundled and verified (input/output tensor shapes inspected directly against the shipped binary) |
+| Text toxicity model | Inherited from SendWise, unmodified |
+| Legal/compliance review | ❌ Not done. Before any public distribution (Play Store, public release), have this reviewed against local parental-monitoring-app regulations, disclosure/consent requirements for the monitored device, and app store policy for safety/monitoring apps. |
 
 ---
 

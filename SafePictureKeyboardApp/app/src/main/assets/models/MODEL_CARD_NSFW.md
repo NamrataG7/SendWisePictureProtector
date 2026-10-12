@@ -1,55 +1,62 @@
 # Model Card — NSFW / Nudity Image Classifier
 
-## Status: binary weights NOT bundled
+## Status: bundled ✅
 
-This repo does **not** ship the actual `.tflite` weights for the NSFW image
-classifier. Binary model files (trained neural network weights) aren't
-something we can author by hand in a code review/PR — they come from an
-actual training/conversion pipeline running real image datasets. This file
-documents what is expected so the real artifact can be dropped in later
-without any code changes.
+`nsfw_classifier.tflite` (17 MB) **is bundled** in this repo at
+`app/src/main/assets/models/nsfw_classifier.tflite`.
 
-**Until the binary file is placed at `app/src/main/assets/models/nsfw_classifier.tflite`,
-the app is still safe to build and ship.** `NsfwImageClassifier` fails open:
-if the asset is missing (which it is, right now), fails to load, or
-inference throws for any reason, it logs a warning via
-`android.util.Log.w("NsfwImageClassifier", ...)` and returns
+- **Source**: [GantMan/nsfw_model](https://github.com/GantMan/nsfw_model), release
+  [`1.2.0`](https://github.com/GantMan/nsfw_model/releases/tag/1.2.0),
+  asset `mobilenet_v2_140_224.1.zip` → `mobilenet_v2_140_224/saved_model.tflite`
+  (already shipped pre-converted to TFLite by the upstream project — no
+  local conversion was needed).
+- **License**: MIT (`Copyright (c) 2020 The nsfw_model Developers`) — see
+  `THIRD_PARTY_LICENSES/nsfw_model-LICENSE.md` at the repo root. Permissive,
+  commercial-safe, redistribution of the binary is explicitly permitted.
+- **Architecture**: MobileNetV2 (width multiplier 1.4), 224×224 input,
+  5-class softmax output.
+- **Reported accuracy** (from upstream `training_results.txt`): ~91.9%
+  validation accuracy after 5 epochs on the upstream training run.
+- **Verified tensor shapes** (inspected directly via the TFLite flatbuffer
+  schema against this exact bundled file — not assumed):
+  - Input tensor `input`: `[1, 224, 224, 3]`, `float32`
+  - Output tensor `Identity`: `[1, 5]`, `float32`
+  - Confirmed class order via upstream `class_labels.txt`:
+    `drawings, hentai, neutral, porn, sexy` — matches `NsfwImageClassifier.LABELS` exactly.
+
+If this asset is ever removed/corrupted, `NsfwImageClassifier` **fails
+open**: it logs a warning via `android.util.Log.w("NsfwImageClassifier", ...)`
+and returns
 
 ```kotlin
 ClassificationResult(isSensitive = false, confidence = 0f, label = "unavailable")
 ```
 
-i.e. it treats every image as non-sensitive and never blocks the user. This
+i.e. it treats every image as non-sensitive and never blocks the user — this
 mirrors the fail-open philosophy already used by `ToxicityAnalyzer` /
-`EnhancedToxicityAnalyzer` for text.
+`EnhancedToxicityAnalyzer` for text, and means a bad/missing model asset
+degrades gracefully instead of crashing the keyboard.
 
-## What to place here: `nsfw_classifier.tflite`
+## Re-generating / replacing this file
 
-Recommended source model: **[GantMan/nsfw_model](https://github.com/GantMan/nsfw_model)**
-(Keras, MobileNetV2 backbone, MIT-compatible open-source NSFW classifier),
-or an equivalent MobileNetV2-based 5-class NSFW classifier trained on the
-same taxonomy. Convert the Keras `.h5`/SavedModel weights to TensorFlow
-Lite, e.g.:
+If you want to retrain or swap in a different NSFW classifier:
 
-```python
+```bash
+# Option A: re-fetch the same upstream artifact used here
+curl -L -o model.zip \
+  https://github.com/GantMan/nsfw_model/releases/download/1.2.0/mobilenet_v2_140_224.1.zip
+unzip model.zip
+cp mobilenet_v2_140_224/saved_model.tflite \
+  app/src/main/assets/models/nsfw_classifier.tflite
+
+# Option B: convert your own Keras/SavedModel weights
+python3 -c "
 import tensorflow as tf
-
-model = tf.keras.models.load_model("nsfw_mobilenet2.224x224.h5")
+model = tf.keras.models.load_model('your_model.h5')
 converter = tf.lite.TFLiteConverter.from_keras_model(model)
-# Optional: converter.optimizations = [tf.lite.Optimize.DEFAULT]  # for size/speed
-tflite_model = converter.convert()
-
-with open("nsfw_classifier.tflite", "wb") as f:
-    f.write(tflite_model)
+open('nsfw_classifier.tflite', 'wb').write(converter.convert())
+"
 ```
-
-Place the resulting file at:
-
-```
-app/src/main/assets/models/nsfw_classifier.tflite
-```
-
-## Expected tensor shapes
 
 | Tensor | Shape | Dtype | Notes |
 |---|---|---|---|

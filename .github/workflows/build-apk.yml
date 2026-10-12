@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    name: Build SafeKeyboardApp Debug APK
+    name: Build SafePictureKeyboardApp Debug APK
     runs-on: ubuntu-latest
 
     steps:
@@ -37,24 +37,24 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Make gradlew executable
-        run: chmod +x SafeKeyboardApp/gradlew
+        run: chmod +x SafePictureKeyboardApp/gradlew
 
       - name: Build debug APK
-        working-directory: SafeKeyboardApp
+        working-directory: SafePictureKeyboardApp
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Upload debug APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: SendWise-debug-apk
-          path: SafeKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
+          path: SafePictureKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
           retention-days: 90
 
       - name: Create GitHub Release (tags only)
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: SafeKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
+          files: SafePictureKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
           generate_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
