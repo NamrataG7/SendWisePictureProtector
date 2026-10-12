@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/keyboard_background">
+
+    <!-- Suggestion strip row: attach-image button + suggestion strip -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/suggestion_strip_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/btn_attach_image"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:background="@drawable/key_background"
+            android:contentDescription="@string/attach_image_button_desc"
+            android:padding="8dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_attach_image" />
+
+        <com.safekeyboard.ime.SuggestionStripView
+            android:id="@+id/suggestion_strip"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/suggestion_strip_bg" />
+    </LinearLayout>
+
+    <!-- Keyboard container -->
+    <android.inputmethodservice.KeyboardView
+        android:id="@+id/keyboard_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/keyboard_background"
+        android:keyBackground="@drawable/key_background"
+        android:keyTextColor="@color/key_text"
+        android:keyTextSize="20sp"
+        android:shadowColor="@android:color/transparent"
+        android:shadowRadius="0"
+        android:keyPreviewLayout="@layout/key_preview" />
+
+</LinearLayout>

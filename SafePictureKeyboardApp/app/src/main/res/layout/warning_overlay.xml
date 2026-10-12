@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SendWise pre-send warning overlay (Fig 2)
+  Rendered by WarningOverlayManager via WindowManager as a modal card.
+  Structure:
+    - Full-screen scrim (dark)
+    - Centered rounded card (20dp corners)
+      - Pink hero band with shield icon + "SendWise Warning"
+      - White body:
+          red triangle + red headline
+          category chip (lavender)
+          severity chip (peach)
+          italic guidance quote
+          outlined "Edit Message" | filled "Continue"
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sendwise_scrim"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Card container -->
+    <LinearLayout
+        android:id="@+id/sendwise_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_card_rounded"
+        android:clipToOutline="true"
+        android:elevation="12dp"
+        android:orientation="vertical">
+
+        <!-- ============ Pink hero band ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_hero_band"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="24dp">
+
+            <ImageView
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:contentDescription="@string/sendwise_shield_content_desc"
+                android:src="@drawable/ic_shield_warning" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="-0.01"
+                android:text="@string/sendwise_hero_title"
+                android:textColor="@color/sendwise_hero_title"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- ============ White body ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="22dp"
+            android:paddingBottom="22dp">
+
+            <!-- Red triangle + headline row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:contentDescription="@string/sendwise_warning_icon_content_desc"
+                    android:src="@drawable/ic_warning_triangle" />
+
+                <TextView
+                    android:id="@+id/warning_message"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-black"
+                    android:lineSpacingExtra="2dp"
+                    android:text="@string/sendwise_headline_default"
+                    android:textColor="@color/sendwise_warning_red"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- Category chip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_chip_category"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <FrameLayout
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_chip_icon_purple">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_tag" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_label_category"
+                    android:textColor="@color/sendwise_text_primary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/category_badge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_category_default"
+                    android:textColor="@color/sendwise_chip_category_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Severity chip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_chip_severity"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <FrameLayout
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_chip_icon_peach">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/sendwise_bar_icon_content_desc"
+                        android:src="@drawable/ic_bar_severity" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_label_severity"
+                    android:textColor="@color/sendwise_text_primary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/severity_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_severity_default"
+                    android:textColor="@color/sendwise_severity_medium"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Italic guidance quote -->
+            <TextView
+                android:id="@+id/sendwise_guidance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:text="@string/sendwise_guidance_default"
+                android:textColor="@color/sendwise_text_primary"
+                android:textSize="15sp"
+                android:textStyle="italic" />
+
+            <!-- Button row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- Outlined: Edit Message -->
+                <LinearLayout
+                    android:id="@+id/button_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_purple_outlined"
+                    android:clickable="true"
+                    android:contentDescription="@string/button_edit"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_pencil" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/button_edit"
+                        android:textAllCaps="false"
+                        android:textColor="@color/sendwise_purple_primary"
+                        android:textSize="15sp" />
+                </LinearLayout>
+
+                <!-- Filled: Continue / Send Anyway -->
+                <LinearLayout
+                    android:id="@+id/button_send_anyway"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_btn_purple_filled"
+                    android:clickable="true"
+                    android:contentDescription="@string/sendwise_button_continue"
+                    android:focusable="true"
+                    android:gravity="center"
+                    android:minHeight="48dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_send" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="@string/sendwise_button_continue"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="15sp" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

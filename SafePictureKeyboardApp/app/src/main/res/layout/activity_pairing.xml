@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  activity_pairing.xml
+
+  Parental-link pairing screen. Three visual states are toggled at runtime
+  by PairingActivity via View.visibility on the three containers below:
+
+    * state_generate  - Idle / no unexpired code. Shows intro + generate button.
+    * state_code      - A live 6-digit code with countdown + instructions.
+    * state_paired    - Device already linked; shows unlink action.
+
+  Aesthetic matches Fig 2 SendWise card (white rounded 20dp card on soft
+  pink hero background, purple primary accents).
+-->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sendwise_warning_hero_start"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Screen title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pairing_title"
+            android:textColor="@color/sendwise_hero_title"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Main card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_card_rounded"
+            android:orientation="vertical"
+            android:padding="24dp"
+            android:elevation="2dp">
+
+            <!-- ==================== STATE: GENERATE ==================== -->
+            <LinearLayout
+                android:id="@+id/state_generate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pairing_menu_title"
+                    android:textColor="@color/sendwise_purple_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/pairing_intro"
+                    android:textColor="@color/sendwise_text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2dp" />
+
+                <Button
+                    android:id="@+id/btn_generate"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_btn_purple_filled"
+                    android:text="@string/pairing_generate_button"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <!-- Progress shown while POST /api/pairing/generate is in flight -->
+                <LinearLayout
+                    android:id="@+id/progress_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ProgressBar
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:indeterminateTint="@color/sendwise_purple_primary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/pairing_generating"
+                        android:textColor="@color/sendwise_text_secondary"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- ==================== STATE: CODE SHOWN ==================== -->
+            <LinearLayout
+                android:id="@+id/state_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pairing_menu_title"
+                    android:textColor="@color/sendwise_purple_primary"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.08" />
+
+                <!-- 6-digit code, monospace, huge, centered -->
+                <TextView
+                    android:id="@+id/tv_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:letterSpacing="0.15"
+                    android:text="000000"
+                    android:textColor="@color/sendwise_purple_deep"
+                    android:textSize="56sp"
+                    android:textStyle="bold"
+                    tools:text="482913" />
+
+                <!-- Countdown line -->
+                <TextView
+                    android:id="@+id/tv_countdown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="Expires in 15:00"
+                    android:textColor="@color/sendwise_text_secondary"
+                    android:textSize="14sp"
+                    tools:text="Expires in 14:37" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/pairing_instructions"
+                    android:textColor="@color/sendwise_text_secondary"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:lineSpacingExtra="2dp" />
+
+                <Button
+                    android:id="@+id/btn_regenerate"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@drawable/bg_btn_purple_outlined"
+                    android:text="@string/pairing_regenerate"
+                    android:textColor="@color/sendwise_purple_primary"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- ==================== STATE: PAIRED ==================== -->
+            <LinearLayout
+                android:id="@+id/state_paired"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                tools:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pairing_paired_title"
+                    android:textColor="@color/sendwise_severity_low"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/pairing_paired_body"
+                    android:textColor="@color/sendwise_text_secondary"
+                    android:textSize="14sp"
+                    android:lineSpacingExtra="2dp" />
+
+                <Button
+                    android:id="@+id/btn_unlink"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_btn_purple_outlined"
+                    android:text="@string/pairing_unlink"
+                    android:textColor="@color/sendwise_purple_primary"
+                    android:textAllCaps="false"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Anchor for snackbars so they don't overlap the system nav bar -->
+        <View
+            android:id="@+id/snackbar_anchor"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+    </LinearLayout>
+</ScrollView>

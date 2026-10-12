@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <!-- Theme colors -->
+    <color name="primary">#FF2196F3</color>
+    <color name="primary_dark">#FF1976D2</color>
+    <color name="accent">#FFFF9800</color>
+
+    <!-- Keyboard colors -->
+    <color name="key_background">#FFFFFFFF</color>
+    <color name="key_background_pressed">#FFD6E4FF</color>
+    <color name="key_background_modifier">#FFE8EAED</color>
+    <color name="key_text">#FF202124</color>
+    <color name="key_shadow">#33000000</color>
+    <color name="key_stroke">#22000000</color>
+    <color name="keyboard_background">#FFECEFF1</color>
+    <color name="suggestion_strip_bg">#FFECEFF1</color>
+    <color name="suggestion_text">#FF202124</color>
+    <color name="suggestion_text_highlight">#FF1A73E8</color>
+    <color name="suggestion_divider">#33000000</color>
+
+    <!-- Warning colors (legacy) -->
+    <color name="warning_overlay_background">#B3000000</color>
+    <color name="warning_card_background">#FFFFFFFF</color>
+    <color name="warning_text">#FF212121</color>
+    <color name="button_edit">#FF4CAF50</color>
+    <color name="button_send_anyway">#FFF44336</color>
+
+    <!-- Legal notice colors -->
+    <color name="legal_background">#FFF3E5F5</color>
+    <color name="legal_text">#FF6A1B9A</color>
+    <color name="legal_text_secondary">#FF7B1FA2</color>
+
+    <!-- ================================================================ -->
+    <!-- SendWise design tokens (per DESIGN_SPEC_FROM_PAPER.md, Fig 2)     -->
+    <!-- ================================================================ -->
+
+    <!-- Card & scrim -->
+    <color name="sendwise_scrim">#B3000000</color>
+    <color name="sendwise_card_bg">#FFFFFFFF</color>
+
+    <!-- Hero band gradient (pink) -->
+    <color name="sendwise_warning_hero_start">#FDE4E1</color>
+    <color name="sendwise_warning_hero_end">#FBD5D0</color>
+
+    <!-- Red warning (headline + triangle + shield) -->
+    <color name="sendwise_warning_red">#E23744</color>
+    <color name="sendwise_warning_red_dark">#B02733</color>
+    <color name="sendwise_hero_title">#1B1F3B</color>
+
+    <!-- Purple / primary brand -->
+    <color name="sendwise_purple_primary">#6C3FE1</color>
+    <color name="sendwise_purple_deep">#5B2FD1</color>
+
+    <!-- Category chip (lavender) -->
+    <color name="sendwise_chip_category_bg">#F3EFF8</color>
+    <color name="sendwise_chip_category_text">#5B2FD1</color>
+
+    <!-- Severity chip (peach) -->
+    <color name="sendwise_chip_severity_bg">#FBEFE0</color>
+    <color name="sendwise_chip_severity_icon">#F59B2A</color>
+
+    <!-- Severity value colors -->
+    <color name="sendwise_severity_high">#E23744</color>
+    <color name="sendwise_severity_medium">#F59B2A</color>
+    <color name="sendwise_severity_low">#2FA36B</color>
+
+    <!-- Neutral text -->
+    <color name="sendwise_text_primary">#1B1F3B</color>
+    <color name="sendwise_text_secondary">#4B4E63</color>
+    <color name="sendwise_text_muted">#6B6E82</color>
+</resources>

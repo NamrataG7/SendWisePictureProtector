@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  FileProvider path spec for SafeKeyboard. Exposes ONLY the short-lived
+  images cache directory (cacheDir/images/) used for the commitContent /
+  clipboard-image handoff fallback. Nothing else is shared.
+-->
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <cache-path name="images" path="images/" />
+</paths>

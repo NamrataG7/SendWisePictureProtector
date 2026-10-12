@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory
+        android:title="Content Moderation">
+
+        <SwitchPreferenceCompat
+            android:key="moderation_enabled"
+            android:title="@string/pref_enable_moderation"
+            android:summary="@string/pref_enable_moderation_summary"
+            android:defaultValue="true" />
+
+        <SeekBarPreference
+            android:key="sensitivity_threshold"
+            android:title="@string/pref_sensitivity"
+            android:max="100"
+            android:defaultValue="50"
+            app:showSeekBarValue="true"
+            android:dependency="moderation_enabled" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/pairing_title">
+
+        <Preference
+            android:key="parental_link"
+            android:title="@string/pairing_menu_title"
+            android:summary="@string/pairing_menu_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Statistics">
+
+        <Preference
+            android:key="violation_count"
+            android:title="Violations (Send Anyway)"
+            android:summary="0"
+            android:selectable="false" />
+
+        <Preference
+            android:key="warning_count"
+            android:title="Warnings Shown"
+            android:summary="0"
+            android:selectable="false" />
+
+        <Preference
+            android:key="reset_counters"
+            android:title="@string/pref_reset_counters"
+            android:summary="@string/pref_reset_counters_summary" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Privacy">
+
+        <Preference
+            android:key="user_id"
+            android:title="Your Anonymous ID"
+            android:summary="Loading..."
+            android:selectable="false" />
+
+        <Preference
+            android:key="about_privacy"
+            android:title="@string/pref_about"
+            android:summary="@string/pref_about_summary" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

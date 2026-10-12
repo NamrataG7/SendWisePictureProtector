@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simple "attach image" icon: rounded picture frame with mountain + sun. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="22dp"
+    android:height="22dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24"
+    android:tint="#6C3FE1">
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#6C3FE1"
+        android:strokeWidth="1.6"
+        android:pathData="M4,5 H20 A1,1 0 0,1 21,6 V18 A1,1 0 0,1 20,19 H4 A1,1 0 0,1 3,18 V6 A1,1 0 0,1 4,5 Z" />
+    <path
+        android:fillColor="#6C3FE1"
+        android:pathData="M7.5,10.5 m-1.5,0 a1.5,1.5 0 1,0 3,0 a1.5,1.5 0 1,0 -3,0" />
+    <path
+        android:fillColor="#6C3FE1"
+        android:pathData="M4,17 L9,12 L12.5,15.5 L15,13 L20,17 Z" />
+</vector>

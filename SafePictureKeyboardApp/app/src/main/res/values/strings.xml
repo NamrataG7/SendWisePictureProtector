@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SendWiseKeyboard</string>
+    <string name="keyboard_name">Safe Keyboard</string>
+    <string name="settings">Settings</string>
+
+    <!-- Main screen -->
+    <string name="enable_keyboard_title">Enable SafeKeyboard</string>
+    <string name="enable_keyboard_description">To use SafeKeyboard, you need to enable it in your device settings</string>
+    <string name="enable_keyboard_button">Open Settings</string>
+    <string name="keyboard_enabled">Keyboard is enabled!</string>
+    <string name="select_keyboard_title">Select SafeKeyboard as your input method</string>
+
+    <!-- Popup messages -->
+    <string name="warning_title">Think Before You Send</string>
+    <string name="warning_message">Your message may contain content that could be harmful or offensive. Would you like to reconsider?</string>
+    <string name="button_edit">Edit Message</string>
+    <string name="button_send_anyway">Send Anyway</string>
+
+    <!-- Settings -->
+    <string name="pref_enable_moderation">Enable Content Moderation</string>
+    <string name="pref_enable_moderation_summary">Analyze messages for harmful content before sending</string>
+    <string name="pref_sensitivity">Sensitivity Level</string>
+    <string name="pref_about">About Privacy</string>
+    <string name="pref_about_summary">Learn how we protect your privacy</string>
+    <string name="pref_reset_counters">Reset Statistics</string>
+    <string name="pref_reset_counters_summary">Clear local warning counters</string>
+
+    <!-- Privacy explanation -->
+    <string name="privacy_title">Privacy &amp; Transparency</string>
+    <string name="privacy_what_analyzed">What is analyzed:\n• Full message context (locally on your device)\n• Intent and tone of your messages</string>
+    <string name="privacy_what_not_stored">What is NEVER stored:\n• Your message text\n• Recipient information\n• App names\n• Your real identity</string>
+    <string name="privacy_what_sent">What is sent to server:\n• Anonymous counter (if you choose \'Send Anyway\')\n• Violation category (e.g., \'harassment\')\n• No identifying information</string>
+
+    <!-- Categories -->
+    <string name="category_harassment">Harassment</string>
+    <string name="category_hate">Hate Speech</string>
+    <string name="category_threat">Threat</string>
+    <string name="category_sexual">Sexual Content</string>
+
+    <!-- Toasts -->
+    <string name="toast_overlay_permission_needed">Please grant overlay permission to enable safety warnings</string>
+    <string name="toast_counters_reset">Statistics have been reset</string>
+    <string name="toast_analysis_failed">Content analysis unavailable, message allowed</string>
+
+    <!-- Legal Notices -->
+    <string name="legal_notice_default">Harmful online communication may violate laws in your jurisdiction. Think before you send.</string>
+    <string name="legal_notice_harassment">Online harassment may violate:\n• Section 506 IPC (Criminal Intimidation) - India\n• 18 U.S.C. § 875 (Interstate Communications) - USA\n• Communications Act 2003, Section 127 - UK</string>
+    <string name="legal_notice_hate">Hate speech online may violate:\n• Section 153A IPC (Promoting enmity) - India\n• 18 U.S.C. § 249 (Hate Crimes) - USA\n• Public Order Act 1986, Section 4A - UK</string>
+    <string name="legal_notice_threat">Making threats online may violate:\n• Section 506 IPC (Criminal Intimidation) - India\n• 18 U.S.C. § 875 (Interstate Communications) - USA\n• Communications Act 2003 - UK</string>
+    <string name="legal_notice_sexual">Sexual harassment online may violate:\n• Section 354A IPC, IT Act Section 67 - India\n• Title IX, State Sexual Harassment Laws - USA\n• Sexual Offences Act 2003 - UK</string>
+
+    <!-- Legal Disclaimer -->
+    <string name="legal_disclaimer">⚠️ Disclaimer: This information is for educational purposes only and does not constitute legal advice. Laws vary by jurisdiction. Consult a licensed attorney for specific legal guidance.</string>
+
+    <!-- SendWise Fig 2 overlay strings -->
+    <string name="sendwise_hero_title">SendWise Warning</string>
+    <string name="sendwise_headline_default">Potentially harmful language detected</string>
+    <string name="sendwise_label_category">Category:</string>
+    <string name="sendwise_label_severity">Severity:</string>
+    <string name="sendwise_category_default">Harassment</string>
+    <string name="sendwise_severity_default">Medium</string>
+    <string name="sendwise_guidance_default">\u201CReview your message before sending.\u201D</string>
+    <string name="sendwise_button_continue">Continue</string>
+    <string name="sendwise_shield_content_desc">SendWise warning shield</string>
+    <string name="sendwise_warning_icon_content_desc">Warning</string>
+    <string name="sendwise_bar_icon_content_desc">Severity indicator</string>
+
+    <!-- Image attach & protect overlay -->
+    <string name="attach_image_button_desc">Attach image</string>
+    <string name="image_warning_hero_title">Image Warning</string>
+    <string name="image_warning_category_default">Sensitive Image</string>
+    <string name="image_warning_guidance">\u201CThis image may contain sensitive content. Choose how to proceed.\u201D</string>
+    <string name="image_warning_button_keep_blurred">Keep Blurred</string>
+    <string name="image_warning_button_send_original">Send Original</string>
+    <string name="image_warning_button_discard">Discard</string>
+    <string name="image_warning_preview_content_desc">Blurred image preview</string>
+    <string name="toast_image_copied_prefix">Image copied — paste to send in </string>
+
+    <!-- Parental Link / Pairing -->
+    <string name="pairing_title">Parental Link</string>
+    <string name="pairing_intro">Link this device to a parent\'s SendWise dashboard to share safety insights. No message content is ever shared.</string>
+    <string name="pairing_generate_button">Generate Pairing Code</string>
+    <string name="pairing_generating">Generating code…</string>
+    <string name="pairing_instructions">Enter this code in your parent\'s SendWise dashboard within 15 minutes.</string>
+    <string name="pairing_expires_prefix">Expires in </string>
+    <string name="pairing_expired">This code has expired. Generate a new one.</string>
+    <string name="pairing_error_network">Couldn\'t reach the SendWise server. Check your connection and try again.</string>
+    <string name="pairing_error_generic">Something went wrong generating your code.</string>
+    <string name="pairing_retry">Retry</string>
+    <string name="pairing_regenerate">Generate New Code</string>
+    <string name="pairing_paired_title">This device is linked</string>
+    <string name="pairing_paired_body">A parent dashboard is receiving anonymous safety summaries from this device.</string>
+    <string name="pairing_unlink">Unlink</string>
+    <string name="pairing_unlink_confirm_title">Unlink this device?</string>
+    <string name="pairing_unlink_confirm_body">The parent dashboard will stop receiving summaries from this device. You can re-link at any time.</string>
+    <string name="pairing_menu_title">Parental Link</string>
+    <string name="pairing_menu_summary">Link this device to a parent\'s SendWise dashboard</string>
+</resources>

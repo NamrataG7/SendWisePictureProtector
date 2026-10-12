@@ -1,0 +1,108 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build SafeKeyboardApp Debug APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21 (Temurin)
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Make gradlew executable
+        run: chmod +x SafeKeyboardApp/gradlew
+
+      - name: Build debug APK
+        working-directory: SafeKeyboardApp
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
+
+      - name: Upload debug APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SendWise-debug-apk
+          path: SafeKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
+          retention-days: 90
+
+      - name: Create GitHub Release (tags only)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: SafeKeyboardApp/app/build/outputs/apk/debug/app-debug.apk
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  dashboard-typecheck:
+    name: Parental Dashboard TypeScript check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dashboard dependencies
+        working-directory: parental-dashboard
+        run: npm install
+
+      - name: TypeScript --noEmit
+        working-directory: parental-dashboard
+        run: npx tsc --noEmit
+
+  reproduce-model:
+    name: Reproduce SendWise RF model
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install training dependencies
+        run: pip install -r model_training/requirements.txt
+
+      - name: Train Random Forest
+        run: python model_training/train_sendwise_rf.py
+
+      - name: Upload training report + model card
+        uses: actions/upload-artifact@v4
+        with:
+          name: sendwise-model-repro
+          path: |
+            model_training/training_report.md
+            model_training/MODEL_CARD.json
+          retention-days: 90

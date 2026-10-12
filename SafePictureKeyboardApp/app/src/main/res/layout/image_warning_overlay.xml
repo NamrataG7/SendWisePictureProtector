@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  SafeKeyboard image attachment warning overlay.
+  Mirrors warning_overlay.xml's visual structure (scrim + rounded card,
+  category/severity chips) but adds a blurred image preview and a 3-way
+  decision: Keep Blurred | Send Original (conditionally enabled) | Discard.
+  Rendered by ImageWarningOverlayManager via WindowManager as a modal card.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sendwise_scrim"
+    android:clickable="true"
+    android:focusable="true">
+
+    <!-- Card container -->
+    <LinearLayout
+        android:id="@+id/image_warning_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="24dp"
+        android:background="@drawable/bg_card_rounded"
+        android:clipToOutline="true"
+        android:elevation="12dp"
+        android:orientation="vertical">
+
+        <!-- ============ Pink hero band ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_hero_band"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:contentDescription="@string/sendwise_shield_content_desc"
+                android:src="@drawable/ic_shield_warning" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="-0.01"
+                android:text="@string/image_warning_hero_title"
+                android:textColor="@color/sendwise_hero_title"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- ============ White body ============ -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="22dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="22dp">
+
+            <!-- Blurred preview -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/bg_chip_category">
+
+                <ImageView
+                    android:id="@+id/image_preview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/image_warning_preview_content_desc"
+                    android:scaleType="centerCrop" />
+            </FrameLayout>
+
+            <!-- Category chip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_chip_category"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <FrameLayout
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_chip_icon_purple">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_tag" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_label_category"
+                    android:textColor="@color/sendwise_text_primary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/image_category_badge"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/image_warning_category_default"
+                    android:textColor="@color/sendwise_chip_category_text"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Severity chip -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_chip_severity"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="12dp">
+
+                <FrameLayout
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:background="@drawable/bg_chip_icon_peach">
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/sendwise_bar_icon_content_desc"
+                        android:src="@drawable/ic_bar_severity" />
+                </FrameLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_label_severity"
+                    android:textColor="@color/sendwise_text_primary"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/image_severity_value"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/sendwise_severity_default"
+                    android:textColor="@color/sendwise_severity_medium"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Guidance quote -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:gravity="center"
+                android:text="@string/image_warning_guidance"
+                android:textColor="@color/sendwise_text_primary"
+                android:textSize="15sp"
+                android:textStyle="italic" />
+
+            <!-- Keep Blurred (filled, primary action) -->
+            <LinearLayout
+                android:id="@+id/button_keep_blurred"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_btn_purple_filled"
+                android:clickable="true"
+                android:contentDescription="@string/image_warning_button_keep_blurred"
+                android:focusable="true"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_shield_warning" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/image_warning_button_keep_blurred"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Send Original (outlined, only enabled if moderation/parental settings allow override) -->
+            <LinearLayout
+                android:id="@+id/button_send_original"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_btn_purple_outlined"
+                android:clickable="true"
+                android:contentDescription="@string/image_warning_button_send_original"
+                android:focusable="true"
+                android:gravity="center"
+                android:minHeight="48dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_send" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="@string/image_warning_button_send_original"
+                    android:textAllCaps="false"
+                    android:textColor="@color/sendwise_purple_primary"
+                    android:textSize="15sp" />
+            </LinearLayout>
+
+            <!-- Discard (plain text link style) -->
+            <TextView
+                android:id="@+id/button_discard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:clickable="true"
+                android:contentDescription="@string/image_warning_button_discard"
+                android:focusable="true"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:minHeight="40dp"
+                android:text="@string/image_warning_button_discard"
+                android:textAllCaps="false"
+                android:textColor="@color/sendwise_text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

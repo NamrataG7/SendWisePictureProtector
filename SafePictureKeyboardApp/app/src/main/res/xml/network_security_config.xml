@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Network Security Config for SendWiseKeyboard.
+
+  Policy:
+    - Production API domain (sendwise-lac.vercel.app): HTTPS only,
+      cleartext denied. Certificate pinning is DISABLED until a real
+      SPKI SHA-256 pin is generated after each Vercel deploy (Vercel
+      rotates edge certificates). See DOCS_ARCHIVE.md (Certificate
+      Pinning section) for how to enable.
+    - Loopback / emulator (localhost, 127.0.0.1, 10.0.2.2): cleartext
+      permitted for local development only.
+    - Everything else: inherits base-config (no cleartext, system CAs).
+-->
+<network-security-config>
+
+    <!-- Production API: HTTPS only. Pinning intentionally not configured
+         to avoid connection failures from Vercel cert rotation. Add a
+         <pin-set> block here with the real base64 SPKI SHA-256 once
+         extracted (see DOCS_ARCHIVE.md > Certificate Pinning). -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">sendwise-lac.vercel.app</domain>
+    </domain-config>
+
+    <!-- Local dev loopback (Android emulator host = 10.0.2.2) -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain>
+        <domain includeSubdomains="true">127.0.0.1</domain>
+        <domain includeSubdomains="true">10.0.2.2</domain>
+    </domain-config>
+
+    <!-- Default: no cleartext anywhere else, use system trust anchors -->
+    <base-config cleartextTrafficPermitted="false">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+</network-security-config>
